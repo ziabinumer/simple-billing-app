@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block main %} 
+
+    <div class="container-fluid page">
+        <form>
+            <div class="tops">
+                <span class="title">Customer Details</span>
+                <div class="tform">
+                    <div class="formgroup">
+                        <label for="input">Customer Name: </label>
+                        <input type="text" name="customer" id="input" autofocus>
+                    </div>
+                    <div class="formgroup">
+                        <label for="input">Phone No: </label>
+                        <input type="text" name="phone" id="input" autofocus>
+                    </div>
+                    <div class="formgroup">
+                        <label for="input">Bill No: </label>
+                        <input type="text" name="billn" id="input" autofocus>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock main %}
