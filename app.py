@@ -2,7 +2,6 @@ from asyncore import read
 import os
 
 import csv
-from django.forms import FileField
 
 from flask import Flask, session, request, redirect, render_template, flash, send_file
 from flask_session import Session
@@ -126,14 +125,13 @@ def update():
 @login_required
 def checkout():
     data = fetchdata()
+    price = list()
+    for i in range(len(data['customer'])):
+        price.append(data['price'][i])
     date = datetime.datetime.now()
     date = date.strftime("%Y-%m-%d %H:%M:%S")
-    return render_template("checkout.html", data=data, date=date)
+    return render_template("checkout.html", price=price, date=date)
 
-@app.route("/bill")
-@login_required
-def bill():
-    return render_template("bill.html")
 
 
 if __name__ == "__main__":

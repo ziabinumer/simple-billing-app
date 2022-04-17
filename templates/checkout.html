@@ -102,12 +102,12 @@ Checkout
                         <tr>
                             <td>Product A</td>
                             <td id="qt1"></td>
-                            <td>100</td>
+                            <td id="p1"></td>
                         </tr>
                         <tr>
                             <td>Product B</td>
                             <td id="qt2"></td>
-                            <td>150</td>
+                            <td id="p2"></td>
                         </tr>
                         <tr>
                             <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
@@ -142,9 +142,14 @@ Checkout
     </div>
 </div>
 <script>
+    let data = '{{ price }}'
+     data = data.replaceAll('&#39;', '')
+     data = data.replace('[', '')
+     data = data.replace(']', '')
+     const dataArr = data.split(', ')
     function total() {
-        var price1 = 100 * document.querySelector("#inputpa").value;
-     var price2 = 150 * document.querySelector("#inputpb").value;
+        var price1 = dataArr[0] * document.querySelector("#inputpa").value;
+     var price2 = dataArr[1] * document.querySelector("#inputpb").value;
      document.querySelector("#inputt").value = price1 + price2;
     }
     document.getElementById("save").addEventListener("click", function() {
@@ -159,12 +164,14 @@ Checkout
  });
  document.getElementById("generate").addEventListener("click", function() {
      document.getElementById("page").style.display = "none";
-     var price1 = 100 * document.querySelector("#inputpa").value;
-     var price2 = 150 * document.querySelector("#inputpb").value;
+     var price1 = dataArr[0] * document.querySelector("#inputpa").value;
+     var price2 = dataArr[1] * document.querySelector("#inputpb").value;
      document.querySelector("#inputt").value = price1 + price2;
      document.querySelector("#totall").innerHTML = "Total: " + String(price1 + price2)
-    document.querySelector("#qt1").innerHTML = price1
-        document.querySelector("#qt2").innerHTML = price2
+    document.querySelector("#qt1").innerHTML = document.querySelector("#inputpa").value
+        document.querySelector("#qt2").innerHTML = document.querySelector("#inputpb").value
+        document.querySelector("#p1").innerHTML = price1
+        document.querySelector("#p2").innerHTML = price2
         document.querySelector("#cunvalue").innerHTML = document.querySelector("#inputc").value;
         document.querySelector("#cpnvalue").innerHTML = document.querySelector("#inputp").value;
         document.querySelector("#cbvalue").innerHTML = document.querySelector("#inputb").value;
