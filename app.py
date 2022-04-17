@@ -11,6 +11,7 @@ from werkzeug.utils import secure_filename
 from helpers import login_required, apology
 
 import random
+import datetime
 #import pdfkit
 
 
@@ -121,12 +122,18 @@ def update():
     
     return render_template("update.html", data=data, len=len(data['customer']))
 
-@app.route("/checkout", methods=["GET", "POST"])
+@app.route("/checkout", methods=["GET"])
 @login_required
 def checkout():
-    if request.method == "POST":
-        return redirect("/")
-    return render_template("checkout.html")
+    data = fetchdata()
+    date = datetime.datetime.now()
+    date = date.strftime("%Y-%m-%d %H:%M:%S")
+    return render_template("checkout.html", data=data, date=date)
+
+@app.route("/bill")
+@login_required
+def bill():
+    return render_template("bill.html")
 
 
 if __name__ == "__main__":

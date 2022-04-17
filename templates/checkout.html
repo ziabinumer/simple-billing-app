@@ -6,26 +6,174 @@ Checkout
 
 {% block main %} 
 
-    <div class="container-fluid page">
-        <form>
+    <div class="page" id="page">
             <div class="tops">
-                <span class="title">Customer Details</span>
                 <div class="tform">
-                    <div class="formgroup">
-                        <label for="input">Customer Name: </label>
-                        <input type="text" name="customer" id="input" autofocus>
-                    </div>
-                    <div class="formgroup">
-                        <label for="input">Phone No: </label>
-                        <input type="text" name="phone" id="input" autofocus>
-                    </div>
-                    <div class="formgroup">
-                        <label for="input">Bill No: </label>
-                        <input type="text" name="billn" id="input" autofocus>
+                <span class="title" >Customer Details</span>
+                    <div class="mtform">
+                        <div class="formgroup">
+                            <label for="input">Customer Name: </label>
+                            <input type="text" name="customer" id="inputc" autofocus>
+                        </div>
+                        <div class="formgroup">
+                            <label for="input">Phone No: </label>
+                            <input type="text" name="phone" id="inputp" autofocus>
+                        </div>
+                        <div class="formgroup">
+                            <label for="input">Bill No: </label>
+                            <input type="text" name="billn" id="inputb" autofocus>
+                        </div>
                     </div>
                 </div>
-            </form>
+                <!--  -->
+                <div class="tform">
+                    <span class="title">Product Details</span>
+                    <div class="mtform">
+                        <div class="pform d-flex">
+                            <div class="formgroup">
+                                <label for="input">Product A: </label>
+                                <input type="number" name="pa" id="inputpa" autofocus value="0" min="0">
+                            </div>
+                            <div class="formgroup">
+                                <label for="input">Product B: </label>
+                                <input type="number" name="pb" id="inputpb" autofocus value="0" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js" type="text/javascript"></script>
+                </div>
+                <!---->
+                <div class="tform"> 
+                    <span class="title">Bill Details</span>
+                    <div class="mtform">
+                        <div class="formgroup">
+                            <label for="input">Total: </label>
+                            <input type="text" name="customer" id="inputt" autofocus disabled value="0">
+                        </div>
+                        <div class="formgroup">
+                            <button class="btn" id="total" onclick="total()">Total</button>
+                        </div>
+                        <div class="formgroup">
+                            <button class="btn" id="generate">Generate Bill</button>
+                        </div>
+                        
+                    </div>
+                </div>
         </div>
     </div>
+    
+    <div class="im" style="display:none;width: 300px;height:350px;background-color: white;" id="htmlbill">
+        <div class="bheader">
+            <h3>Bill List</h3>
+        </div>
+        <div class="bbody">
+            <span class="pb-8">Welcome To Store's Retail</span>
+            <div class="d-flex flex-column fl justify-left">
+                <div class="lll">
+                    <div>
+                        <label for="vvalue">Customer Name: </label>
+                        <label id="cunvalue"></label>
+                    </div>
+                    <div>
+                        <label for="vvalue">Phone No: </label>
+                        <label id="cpnvalue"></label>
+                    </div>
+                    <div>
+                        <label for="vvalue">Bill No: </label>
+                        <label id="cbvalue" style="padding-bottom: 5px;"></label>
+                    </div>
+                    
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>Product</td>
+                            <td>Qty</td>
+                            <td>Price</td>
+                        </tr>
+                        <tr>
+                            <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Product A</td>
+                            <td id="qt1"></td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Product B</td>
+                            <td id="qt2"></td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td colspan="3" id="totall">Total</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Date: {{ date }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+    
+            </div>
+        </div>
+    </div>
+<div class="d-flex p-2">
+    <div class="formgroup">
+        <button class="btn" id="save" style="display:none;">Save Bill</button>
+    </div>
+    <div class="formgroup">
+        <button class="btn" id="clear" onclick="location.reload()" style="display: none;">Clear</button>
+    </div>
+</div>
+<script>
+    function total() {
+        var price1 = 100 * document.querySelector("#inputpa").value;
+     var price2 = 150 * document.querySelector("#inputpb").value;
+     document.querySelector("#inputt").value = price1 + price2;
+    }
+    document.getElementById("save").addEventListener("click", function() {
+	html2canvas(document.getElementById("htmlbill")).then(function (canvas) {
+            var anchorTag = document.createElement("a");
+            document.body.appendChild(anchorTag);
+			anchorTag.download = "filename.jpg";
+			anchorTag.href = canvas.toDataURL();
+			anchorTag.target = '_blank';
+			anchorTag.click();
+		});
+ });
+ document.getElementById("generate").addEventListener("click", function() {
+     document.getElementById("page").style.display = "none";
+     var price1 = 100 * document.querySelector("#inputpa").value;
+     var price2 = 150 * document.querySelector("#inputpb").value;
+     document.querySelector("#inputt").value = price1 + price2;
+     document.querySelector("#totall").innerHTML = "Total: " + String(price1 + price2)
+    document.querySelector("#qt1").innerHTML = price1
+        document.querySelector("#qt2").innerHTML = price2
+        document.querySelector("#cunvalue").innerHTML = document.querySelector("#inputc").value;
+        document.querySelector("#cpnvalue").innerHTML = document.querySelector("#inputp").value;
+        document.querySelector("#cbvalue").innerHTML = document.querySelector("#inputb").value;
+     document.getElementById("htmlbill").style.display = "block";
+     document.getElementById("save").style.display = "block";
+     document.getElementById("clear").style.display = "block";
+
+
+ })
+</script>
 
 {% endblock main %}

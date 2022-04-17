@@ -1,0 +1,93 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+bill
+{% endblock title %} 
+
+{% block main %} 
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js" type="text/javascript"></script>
+
+<div class="im" style="display: block; width: 300px;height:400px;background-color: white;" id="htmlbill">
+    <div class="bheader">
+        <h3>Bill List</h3>
+    </div>
+    <div class="bbody">
+        <span class="pb-8">Welcome To Store's Retail</span>
+        <div class="d-flex flex-column fl justify-left">
+            <div class="lll">
+                <div>
+                    <label for="vvalue">Customer Name: </label>
+                    <label id="cunvalue"></label>
+                </div>
+                <div>
+                    <label for="vvalue">Phone No: </label>
+                    <label id="cpnvalue"></label>
+                </div>
+                <div>
+                    <label for="vvalue">Bill No: </label>
+                    <label id="cbvalue"></label>
+                </div>
+                
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td>Qty</td>
+                        <td>Price</td>
+                    </tr>
+                    <tr>
+                        <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Product A</td>
+                        <td>1</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Product B</td>
+                        <td>2</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td  style="border-bottom: 1px solid #000;" colspan="3"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3">Total: 150</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+<button id="btn_convert1">Convert</button>
+<h3>Preview :</h3>
+    <div id="previewImg">
+    </div>
+<script>
+    document.getElementById("btn_convert1").addEventListener("click", function() {
+        document.querySelector("#cunvalue").innerHTML = document.querySelector("#inputc").value;
+        document.querySelector("#cpnvalue").innerHTML = document.querySelector("#inputp").value;
+        document.querySelector("#cbvalue").innerHTML = document.querySelector("#inputb").value;
+	html2canvas(document.getElementById("htmlbill")).then(function (canvas) {			var anchorTag = document.createElement("a");
+			document.body.appendChild(anchorTag);
+			document.getElementById("previewImg").appendChild(canvas);
+			anchorTag.download = "filename.jpg";
+			anchorTag.href = canvas.toDataURL();
+			anchorTag.target = '_blank';
+			anchorTag.click();
+		});
+ });
+</script>
+
+{% endblock %}
