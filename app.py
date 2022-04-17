@@ -7,7 +7,7 @@ from flask import Flask, session, request, redirect, render_template, flash, sen
 from flask_session import Session
 from werkzeug.utils import secure_filename
 
-from helpers import login_required, apology
+from helpers import login_required
 
 import random
 import datetime
