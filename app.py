@@ -23,6 +23,7 @@ app.config["TEMPLATES_AUTO_RELOADED"] = True
 # configure session
 app.config["SESSION_PERMANENT"] = False 
 app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = 'ghghdshjfhdsksukoqfFjsiRsJFJGZKAOF'
 
 Session(app)
 
@@ -34,9 +35,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 # functions
+def filec(s):
+    if not os.path.exists(s):
+            return False
+    return True
+
 def fetchdata():
-    if not os.path.exists("data.csv"):
-            open("data.csv", 'a+').close()
+    if not filec("data.csv"):
+        open("data.csv", 'a+').close()
     data = dict()
     data['customer'], data['product'], data['price'] = list(), list(), list()
     with open("data.csv") as file:
@@ -52,6 +58,7 @@ def fetchdata():
 @app.route("/")
 @login_required
 def index():
+    session.permanent = False
     data = fetchdata()
     return render_template("index.html", data=data, len=len(data['customer']))
 
@@ -121,9 +128,16 @@ def update():
     
     return render_template("update.html", data=data, len=len(data['customer']))
 
-@app.route("/checkout", methods=["GET"])
+@app.route("/checkout", methods=["GET", "POST"])
 @login_required
 def checkout():
+    if request.method == "POST":
+        if not filec("reports.csv"):
+            with open("reports.csv", 'a+') as file:
+                file.write("Customer Name,Phone No,Bill No,Product 1,Qty,Price,Product 2,Qty2,Price2,Total\n")
+        file = open("reports.csv", "a+")
+        file.write(request.form.get("towrite") + '\n')
+        return redirect(request.url)
     data = fetchdata()
     price = list()
     for i in range(len(data['customer'])):

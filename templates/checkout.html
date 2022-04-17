@@ -140,6 +140,9 @@ Checkout
     <div class="formgroup">
         <button class="btn" id="clear" onclick="location.reload()" style="display: none;">Clear</button>
     </div>
+    <form action="/checkout" method="post" id="formwrite">
+        <input name="towrite" id="towrite" hidden>
+    </form>
 </div>
 <script>
     let data = '{{ price }}'
@@ -160,26 +163,35 @@ Checkout
 			anchorTag.href = canvas.toDataURL();
 			anchorTag.target = '_blank';
 			anchorTag.click();
+            document.getElementById("formwrite").submit()
 		});
  });
  document.getElementById("generate").addEventListener("click", function() {
      document.getElementById("page").style.display = "none";
      var price1 = dataArr[0] * document.querySelector("#inputpa").value;
      var price2 = dataArr[1] * document.querySelector("#inputpb").value;
+     var total = price1 + price2
      document.querySelector("#inputt").value = price1 + price2;
-     document.querySelector("#totall").innerHTML = "Total: " + String(price1 + price2)
-    document.querySelector("#qt1").innerHTML = document.querySelector("#inputpa").value
-        document.querySelector("#qt2").innerHTML = document.querySelector("#inputpb").value
-        document.querySelector("#p1").innerHTML = price1
-        document.querySelector("#p2").innerHTML = price2
-        document.querySelector("#cunvalue").innerHTML = document.querySelector("#inputc").value;
-        document.querySelector("#cpnvalue").innerHTML = document.querySelector("#inputp").value;
-        document.querySelector("#cbvalue").innerHTML = document.querySelector("#inputb").value;
+     document.querySelector("#totall").innerHTML = "Total: " + total
+
+     let qty = document.querySelector("#inputpa").value;
+     let qty2 = document.querySelector("#inputpb").value;
+    document.querySelector("#qt1").innerHTML = qty;
+        document.querySelector("#qt2").innerHTML = qty2;
+        document.querySelector("#p1").innerHTML = price1;
+        document.querySelector("#p2").innerHTML = price2;
+
+        let customer = document.querySelector("#inputc").value;
+        let phone = document.querySelector("#inputp").value;
+        let bill = document.querySelector("#inputb").value;
+
+        document.querySelector("#cunvalue").innerHTML = customer;
+        document.querySelector("#cpnvalue").innerHTML = phone;
+        document.querySelector("#cbvalue").innerHTML = bill;
      document.getElementById("htmlbill").style.display = "block";
      document.getElementById("save").style.display = "block";
      document.getElementById("clear").style.display = "block";
-
-
+    document.getElementById("towrite").value = customer + ',' + phone + ',' + bill + ',' + 'Product A,' + qty + ',' + price1 + ',' + 'Product B,' + qty2 + ',' + price2+ ',' + total;  
  })
 </script>
 
