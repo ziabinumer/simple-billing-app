@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from helpers import login_required, apology
 
 import random
-import pdfkit
+#import pdfkit
 
 
 # configure app
