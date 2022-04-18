@@ -134,9 +134,9 @@ def checkout():
     if request.method == "POST":
         if not filec("reports.csv"):
             with open("reports.csv", 'a+') as file:
-                file.write("Customer Name,Phone No,Bill No,Product 1,Qty,Price,Product 2,Qty2,Price2,Total\n")
+                file.write("Date,Customer Name,Phone No,Bill No,Product 1,Qty,Price,Product 2,Qty2,Price2,Total\n")
         file = open("reports.csv", "a+")
-        file.write(request.form.get("towrite") + '\n')
+        file.write(datetime.now() + request.form.get("towrite") + '\n')
         return redirect(request.url)
     data = fetchdata()
     price = list()
