@@ -131,19 +131,19 @@ def update():
 @app.route("/checkout", methods=["GET", "POST"])
 @login_required
 def checkout():
+    date = datetime.datetime.now()
+    date = date.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == "POST":
         if not filec("reports.csv"):
             with open("reports.csv", 'a+') as file:
                 file.write("Date,Customer Name,Phone No,Bill No,Product 1,Qty,Price,Product 2,Qty2,Price2,Total\n")
         file = open("reports.csv", "a+")
-        file.write(datetime.now() + request.form.get("towrite") + '\n')
+        file.write(date + request.form.get("towrite") + '\n')
         return redirect(request.url)
     data = fetchdata()
     price = list()
     for i in range(len(data['customer'])):
         price.append(data['price'][i])
-    date = datetime.datetime.now()
-    date = date.strftime("%Y-%m-%d %H:%M:%S")
     return render_template("checkout.html", price=price, date=date)
 
 
